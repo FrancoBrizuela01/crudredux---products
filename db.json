@@ -11,9 +11,29 @@
       "id": 9
     },
     {
-      "name": "1",
-      "price": 2,
-      "id": 10
+      "name": "Rib Eye",
+      "price": 800,
+      "id": 11
+    },
+    {
+      "name": "Rib Eye",
+      "price": 400,
+      "id": 12
+    },
+    {
+      "name": "jugo de naranja",
+      "price": 100,
+      "id": 13
+    },
+    {
+      "name": "jugo de limon",
+      "price": 1,
+      "id": 14
+    },
+    {
+      "name": "limonada",
+      "price": 1,
+      "id": 16
     }
   ]
 }
