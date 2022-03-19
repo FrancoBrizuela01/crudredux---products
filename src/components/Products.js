@@ -10,6 +10,7 @@ const Products = () => {
     //Consultar la API
     const uploadProducts = () => dispatch(getProductsAction());
     uploadProducts();
+    // eslint-disable-next-line
   }, []);
 
   //obtener el state

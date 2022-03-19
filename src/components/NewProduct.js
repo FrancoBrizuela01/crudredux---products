@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 //Actions de Redux
 import { createNewProductAction } from "../actions/pruductActions";
+import { showAlert, hideAlertAction } from "../actions/alertActions";
 
 const NewProduct = ({ history }) => {
+  //redireccionar
+  let navigate = useNavigate();
+
   //state del componente
   const [name, saveName] = useState("");
   const [price, savePrice] = useState(0);
@@ -14,6 +19,7 @@ const NewProduct = ({ history }) => {
   //acceder al state del store
   const loading = useSelector((state) => state.products.loading);
   const error = useSelector((state) => state.products.error);
+  const alert = useSelector((state) => state.alert.alert);
 
   //mandar a llamar el action de productAction
   const addProduct = (product) => dispatch(createNewProductAction(product));
@@ -24,10 +30,16 @@ const NewProduct = ({ history }) => {
 
     //validar formulario
     if (name.trim() === "" || price <= 0) {
+      const alert = {
+        msg: "Both fields are required",
+        classes: "alert alert-danger text-center text-uppercase p3",
+      };
+      dispatch(showAlert(alert));
       return;
     }
 
     //si no hay errores
+    dispatch(hideAlertAction());
 
     //crear el nuevo producto
     addProduct({
@@ -36,7 +48,7 @@ const NewProduct = ({ history }) => {
     });
 
     //redireccionar
-    history.push("/");
+    navigate("/");
   };
 
   return (
@@ -47,6 +59,7 @@ const NewProduct = ({ history }) => {
             <h2 className="text-center mb-4 font-weight-bold">
               Add New Product
             </h2>
+            {alert ? <p className={alert.classes}>{alert.msg}</p> : null}
             <form onSubmit={submitNewProduct}>
               <div className="form-group">
                 <label>Name Product</label>

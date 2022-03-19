@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "Rib Eye",
-      "price": "500",
+      "price": "700",
       "id": 7
     },
     {
@@ -31,7 +31,12 @@
       "id": 14
     },
     {
-      "name": "limonada",
+      "name": "1",
+      "price": 2,
+      "id": 15
+    },
+    {
+      "name": "Pepe",
       "price": 1,
       "id": 16
     }

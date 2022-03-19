@@ -8,9 +8,14 @@ import {
   GET_PRODUCT_REMOVE,
   PRODUCT_REMOVED_SUCCESS,
   PRODUCT_REMOVED_ERROR,
+  GET_PRODUCT_EDIT,
+  START_PRODUCT_EDIT,
+  PRODUCT_EDIT_SUCCESS,
+  PRODUCT_EDIT_ERROR,
 } from "../types";
 import clientAxios from "../config/axios";
 import Swal from "sweetalert2";
+import { type } from "@testing-library/user-event/dist/type";
 
 //Crear nuevos productos
 export function createNewProductAction(product) {
@@ -93,7 +98,7 @@ export function deleteProductAction(id) {
       await clientAxios.delete(`/products/${id}`);
       dispatch(removeProductSuccess());
       //si se elimina mostrar alerta
-      Swal.fire("Deleted!", "Your file has been deleted.", "success"); 
+      Swal.fire("Deleted!", "Your file has been deleted.", "success");
     } catch (error) {
       dispatch(removeProductError());
     }
@@ -111,5 +116,45 @@ const removeProductSuccess = () => ({
 
 const removeProductError = () => ({
   type: PRODUCT_REMOVED_ERROR,
+  payload: true,
+});
+
+//colocar producto en edicion
+export function getProductEdit(product) {
+  return (dispatch) => {
+    dispatch(getProductEditAction(product));
+  };
+}
+
+const getProductEditAction = (product) => ({
+  type: GET_PRODUCT_EDIT,
+  payload: product,
+});
+
+//edita un producto en la api y state
+export function editProductAction(product) {
+  return async (dispatch) => {
+    dispatch(editProduct());
+
+    try {
+      await clientAxios.put(`/products/${product.id}`, product);
+      dispatch(editProductSuccess(product));
+    } catch (error) {
+      dispatch(editProductError());
+    }
+  };
+}
+
+const editProduct = () => ({
+  type: START_PRODUCT_EDIT,
+});
+
+const editProductSuccess = (product) => ({
+  type: PRODUCT_EDIT_SUCCESS,
+  payload: product,
+});
+
+const editProductError = () => ({
+  type: PRODUCT_EDIT_ERROR,
   payload: true,
 });

@@ -30,4 +30,4 @@ function App() {
 export default App;
 
 //para ejecutar la bd: npx json-server .\db.json --port 4000
-//312 queda ver
+//318 queda ver

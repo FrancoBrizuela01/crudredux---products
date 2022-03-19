@@ -1,13 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-import { deleteProductAction } from "../actions/pruductActions";
+import { deleteProductAction, getProductEdit } from "../actions/pruductActions";
 
 const Product = ({ product }) => {
   const { name, price, id } = product;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate(); //habilitar navigate para redireccion
+
   //confirmar si decea eliminarlo
   const confirmDeleteProduct = (id) => {
     //preguntar al usuario
@@ -23,10 +25,16 @@ const Product = ({ product }) => {
       if (result.isConfirmed) {
         //pasarlo al action
         dispatch(deleteProductAction(id));
-
       }
     });
   };
+
+  //funcion que rediridige de forma programada
+  const redirectEdition = (product) => {
+    dispatch(getProductEdit(product));
+    navigate(`/product/edit/${product.id}`);
+  };
+
   return (
     <tr>
       <td>{name}</td>
@@ -34,9 +42,13 @@ const Product = ({ product }) => {
         <span className="font-weight-bold">$ {price}</span>
       </td>
       <td className="acciones">
-        <Link to={`/product/edit/${id}`} className="btn btn-primary mr-2">
+        <button
+          type="button"
+          onClick={() => redirectEdition(product)}
+          className="btn btn-primary mr-2"
+        >
           Edit
-        </Link>
+        </button>
         <button
           type="button"
           className="btn btn-danger"
